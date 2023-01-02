@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
 permissions: read-all|write-all
 
 jobs:
@@ -28,11 +28,16 @@ jobs:
       - name: Build project
         run: yarn build
 
-      - name: Upload production-ready build files
+      - name: Upload dist
         uses: actions/upload-artifact@v2
         with:
-          name: production-files
+          name: dist
           path: ./dist
+      - name: Upload src
+        with:
+          name: src
+          path: ./src
+      
 
   deploy:
     name: Deploy
@@ -41,11 +46,16 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Download artifact
+      - name: Download dist artifact
         uses: actions/download-artifact@v2
         with:
-          name: production-files
+          name: dist
           path: ./dist
+      - name: Download src artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: src
+          path: ./s
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
