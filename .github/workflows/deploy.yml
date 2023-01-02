@@ -55,7 +55,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: src
-          path: ./s
+          path: ./src
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
